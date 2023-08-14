@@ -16,6 +16,9 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+    function handleBuyProduct() {
+        console.log(product.defaultPriceId);
+    }
 
     return (
         <>
@@ -30,7 +33,7 @@ export default function Product({ product }: ProductProps) {
 
                     <p>{product.description}</p>
 
-                    <button>
+                    <button onClick={handleBuyProduct}>
                         Comprar agora
                     </button>
                 </ProductDetails>
