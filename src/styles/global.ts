@@ -18,10 +18,11 @@ export const globalStyles = globalCss({
         fontWeight: 400,
     },
 
-    fontSizes: {
-        md: '1.125rem',
-        lg: '1.25rem',
-        xl: '1.5rem',
-        '2xl': '2rem',
+    a: {
+        color: 'inherit',
     },
+
+    button: {
+        cursor: "pointer",
+    }
 });
