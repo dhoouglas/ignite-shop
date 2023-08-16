@@ -7,6 +7,7 @@ import Stripe from "stripe";
 import Link from "next/link";
 import Head from "next/head";
 import useEmblaCarousel from "embla-carousel-react";
+import { CartButton } from "@/components/CartButton";
 
 interface HomeProps {
   products: {
@@ -47,12 +48,17 @@ export default function Home({ products }: HomeProps) {
                         width={520} 
                         height={480} 
                         alt=""
-                        
+                        placeholder="blur"
+                        blurDataURL={product.imageUrl}
                       />
 
                       <footer>
-                        <strong>{product.name}</strong>
-                        <span>{product.price}</span>
+                        <div>
+                          <strong>{product.name}</strong>
+                          <span>{product.price}</span>
+                        </div>
+
+                        <CartButton color="green" size="large"/>
                       </footer>
                     </Product>
                   </Link>
