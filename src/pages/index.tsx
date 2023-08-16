@@ -1,14 +1,12 @@
-import { HomeContainer, Product } from "../styles/pages/home";
+import { HomeContainer, Product, SliderContainer } from "../styles/pages/home";
 import Image from "next/image";
 
-import { useKeenSlider } from 'keen-slider/react';
-
-import 'keen-slider/keen-slider.min.css';
 import { GetStaticProps } from "next";
 import { stripe } from "../lib/stripe";
 import Stripe from "stripe";
 import Link from "next/link";
 import Head from "next/head";
+import useEmblaCarousel from "embla-carousel-react";
 
 interface HomeProps {
   products: {
@@ -20,12 +18,11 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
-  const [sliderRef] = useKeenSlider({
-    slides: {
-      perView: 3,
-      spacing: 48,
-    },
-  })
+  const [emblaRef] = useEmblaCarousel({
+    align: 'start',
+    skipSnaps: false,
+    dragFree: true,
+  });
 
   return (
     <>
@@ -33,22 +30,38 @@ export default function Home({ products }: HomeProps) {
         <title>Home | Ignite Shop</title>
       </Head>
 
-      <HomeContainer ref={sliderRef} className="keen-slider">
-        {products.map(product => {
-          return (
-            <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
-              <Product  className="keen-slider__slide">
-                <Image src={product.imageUrl} width={520} height={480} alt="" />
+      <div style={{ overflow: "hidden", width: "100%" }}>
+        <HomeContainer>
+          <div className="embla" ref={emblaRef}>
+            <SliderContainer className="embla__container container">
+              {products.map(product => {
+                return (
+                  <Link 
+                    key={product.id} 
+                    href={`/product/${product.id}`} 
+                    prefetch={false}
+                  >
+                    <Product  className="embla__slide">
+                      <Image 
+                        src={product.imageUrl} 
+                        width={520} 
+                        height={480} 
+                        alt=""
+                        
+                      />
 
-                <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
-                </footer>
-              </Product>
-            </Link>
-          )
-        })}
-      </HomeContainer>
+                      <footer>
+                        <strong>{product.name}</strong>
+                        <span>{product.price}</span>
+                      </footer>
+                    </Product>
+                  </Link>
+                )
+              })}
+            </SliderContainer>
+          </div>
+        </HomeContainer>
+      </div>
     </>
   )
 }

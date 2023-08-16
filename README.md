@@ -1,6 +1,6 @@
 next
 stiteches
-keen-slider
+keen-slider (Before embla-carousel-reac)
 stripe
 axios
 phosphor-react
