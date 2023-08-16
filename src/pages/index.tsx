@@ -10,6 +10,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { CartButton } from "../components/CartButton";
 import { useCart } from "../hooks/useCart";
 import { IProduct } from "../context/CartContext";
+import { MouseEvent } from "react";
 
 interface HomeProps {
   products: IProduct[];
@@ -23,6 +24,11 @@ export default function Home({ products }: HomeProps) {
   });
 
   const { addToCart } = useCart();
+
+  function handleAddToCart(e: MouseEvent<HTMLButtonElement>, product: IProduct) {
+    e.preventDefault();
+    addToCart(product);
+  }
 
   return (
     <>
@@ -60,7 +66,7 @@ export default function Home({ products }: HomeProps) {
                         <CartButton 
                           color="green" 
                           size="large"
-                          onClick={() => addToCart(product)}
+                          onClick={(e) => handleAddToCart(e, product)}
                         />
                       </footer>
                     </Product>

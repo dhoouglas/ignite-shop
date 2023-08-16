@@ -5,8 +5,12 @@ import { X } from 'phosphor-react';
 import Image from 'next/image';
 
 import testeImage from "../../assets/Camisetas/1.png";
+import { useCart } from '../../hooks/useCart';
 
 export function Cart() {
+    const { cartItems } = useCart();
+    const cartQuantity = cartItems.length;
+
     return (
         <Dialog.Root>
             <Dialog.Trigger asChild>
@@ -22,31 +26,34 @@ export function Cart() {
                     <h2>Sacola de compras</h2>
                     
                     <section>
-                        {/*<p>Parece que seu carrinho está vazio :( </p>*/}
+                        {cartQuantity <= 0 && <p>Parece que seu carrinho está vazio :( </p>}
 
-                        <CartProduct>
-                            <CartProductImage>
-                                <Image 
-                                    width={100}
-                                    height={93}
-                                    alt=""
-                                    src={testeImage}
-                                />
-                            </CartProductImage>
+                        {cartItems.map((cartItem) => (
+                            <CartProduct key={cartItem.id}>
+                                <CartProductImage>
+                                    <Image 
+                                        width={100}
+                                        height={93}
+                                        alt=""
+                                        src={cartItem.imageUrl}
+                                    />
+                                </CartProductImage>
 
-                            <CartProductDetails>
-                                <p>Produto 1</p>
-                                <strong>R$ 50.00</strong>
-                                <button>Remover</button>
-                            </CartProductDetails>
-                        </CartProduct>
+                                <CartProductDetails>
+                                    <p>{cartItem.name}</p>
+                                    <strong>{cartItem.price}</strong>
+                                    <button onClick={() => console.log("remove")}>Remover</button>
+                                </CartProductDetails>
+                            </CartProduct>
+                        ))}
+
                     </section>
 
                     <CartFinalization>
                         <FinalizationDetails>
                             <div>
                                 <span>Quantidade</span>
-                                <p>2 itens</p>
+                                <p>{cartQuantity} {cartQuantity > 1 ? "itens" : "item"} </p>
                             </div>
 
                             <div>
